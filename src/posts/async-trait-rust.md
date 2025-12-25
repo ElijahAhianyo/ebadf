@@ -277,31 +277,32 @@ For example, running `cargo doc --open` produces this for our `CacheStore` trait
 
 ```rust
 pub trait CacheStore:
-    Send
-    + Sync
-    + 'static {
+Send
++ Sync
++ 'static {
     // Required methods
     fn get<'life0, 'life1, 'async_trait>(
         &'life0 self,
         key: &'life1 str,
-    ) -> Pin<Box<dyn Future<Output = Result<Option<Value>, CacheError>> + Send + 'async_trait>>
-       where Self: 'async_trait,
-             'life0: 'async_trait,
-             'life1: 'async_trait;
-    fn insert<'life0, 'async_trait>(
+    ) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send + 'async_trait>>
+    where Self: 'async_trait,
+          'life0: 'async_trait,
+          'life1: 'async_trait;
+    fn insert<'life0, 'life1, 'async_trait>(
         &'life0 self,
-        key: String,
+        key: &'life1 str,
         value: Value,
-    ) -> Pin<Box<dyn Future<Output = Result<(), CacheError>> + Send + 'async_trait>>
-       where Self: 'async_trait,
-             'life0: 'async_trait;
+    ) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'async_trait>>
+    where Self: 'async_trait,
+          'life0: 'async_trait,
+          'life1: 'async_trait;
     fn remove<'life0, 'life1, 'async_trait>(
         &'life0 self,
         key: &'life1 str,
-    ) -> Pin<Box<dyn Future<Output = Result<(), CacheError>> + Send + 'async_trait>>
-       where Self: 'async_trait,
-             'life0: 'async_trait,
-             'life1: 'async_trait;
+    ) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'async_trait>>
+    where Self: 'async_trait,
+          'life0: 'async_trait,
+          'life1: 'async_trait;
 }
 ```
 
