@@ -111,6 +111,23 @@
   }
 }
 
+/* Ensure links are blue site-wide (prose + explicit .link class) */
+.prose a,
+.link {
+  color: #0366d6;
+}
+
+.prose a:hover,
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode link color */
+.dark .prose a,
+.dark .link {
+  color: #9ad0ff;
+}
+
 /* Note component animations */
 @layer components {
   .note-content-enter {
@@ -153,4 +170,26 @@
 
 pre {
   background-color: transparent !important;
+}
+
+code.inline-code::before,
+code.inline-code::after {
+  content: none !important;
+  display: none !important;
+}
+
+code.inline-code {
+  background-color: #f7f7f7;
+  color: #c21d14;           
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark code.inline-code {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: #f27b75;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.link {
+  color: rgb(40, 40, 205) !important;
 }
