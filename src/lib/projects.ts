@@ -75,7 +75,7 @@ export const projects: Project[] = [
     id: 'cot-rs',
     title: 'Cot.rs',
     description: 'a web framework for rust',
-    longDescription: 'I\'m currently a top contributor to the project.',
+    longDescription: 'I\'m currently a maintainer of the project.',
     url: 'https://github.com/cot-rs/cot',
     githubUrl: 'https://github.com/cot-rs/cot',
     technologies: ['Rust'],
@@ -83,6 +83,20 @@ export const projects: Project[] = [
     featured: true,
     impact: '800+ GitHub stars',
     date: '2025-03-15',
+    status: 'active'
+  },
+  {
+    id: 'charlotte-os',
+    title: 'Charlotte OS',
+    description: 'a rust operating system',
+    longDescription: 'I\'m currently a maintainer of the project.',
+    url: 'https://codeberg.org/CharlotteOS',
+    githubUrl: 'https://codeberg.org/CharlotteOS',
+    technologies: ['Rust'],
+    category: 'opensource',
+    featured: true,
+    impact: '10+ GitHub stars',
+    date: '2025-12-01',
     status: 'active'
   },
 ];
