@@ -1,18 +1,18 @@
 ---
-title: "Ergonomic Async Traits in Rust"
+title: "Ergonomic Async Trait Objects in Rust"
 excerpt: "Designing ergonomic async trait interfaces in Rust"
 date: "2025-12-25"
 readingTime: "12 min read"
-slug: "async-trait-rust"
+slug: "ergonomic-async-trait-objects-rust"
 ---
 
 
-Async Rust is notoriously known for its gnarly syntax, and as library maintainers, it's crucial to do as much heavy lifting as possible so your users don't inherit the 
+Async Rust can be a pain to deal with, and as library maintainers, it's crucial to do as much heavy lifting as possible so your users don't inherit the 
 headaches of dealing with it. We recently added support for dynamic cache backends in [cot](https://github.com/cot-rs/cot) and one small challenge was getting the API design and ergonomics right.
 The use cases and code used here were lifted directly from the codebase. Cot is a Rust web framework inspired by Django.
 
 ## Problem Background
-We needed to add caching machinery to the cot web framework that provides users with a simple interface while abstracting away how objects are stored and retrieved from the cache.
+We needed to add caching machinery to the cot web framework that provides users with a simple cache interface while abstracting away how objects are stored and retrieved from the cache.
 We also wanted to support multiple cache backends and allow users to implement their own custom cache backends if they wanted to. How do we design such an API in Rust, especially when dealing with async code?
 
 ## The Synchronous Version
@@ -132,7 +132,7 @@ This means we need to change the design to an asynchronous one.
 
 ## The Naive Async Version
 
-Rust supports async traits, so the updated code should look something like this:
+Rust supports async traits, so the updated code (without showing elided lifetimes) should look something like this:
 
 ```rust
 pub trait CacheStore: Send + Sync + 'static{
@@ -142,7 +142,10 @@ pub trait CacheStore: Send + Sync + 'static{
 }
 
 
-...
+#[derive(Debug, Clone)]
+pub struct Memory {
+    map: Arc<Mutex<HashMap<String, Value>>>,
+}
 
 impl CacheStore for Memory {
     async fn get(&self, key: &str) -> CacheResult<Option<Value>> {
@@ -189,7 +192,7 @@ impl CacheStore {
 }
 ```
 
-
+In the above code, we gate the in-memory store behind a `Mutex` and drop the `mut` requirement in the trait methods.
 We also update our main function to use `tokio`'s async runtime:
 
 ```rust
@@ -322,9 +325,9 @@ use std::pin::Pin;
 use std::future::Future;
 
 pub trait CacheStore: Send + Sync + 'static{
-    fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = Result<Option<Value>, String>> + Send>>;
-    fn insert(&self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = Result<(), String>> + Send>>;
-    fn remove(&self, key: &str) -> Pin<Box<dyn Future<Output = Result<(), String>> + Send>>;
+    fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send>>;
+    fn insert(&self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send>>;
+    fn remove(&self, key: &str) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send>>;
 }
 ```
 
@@ -383,7 +386,7 @@ the `Cache` API don't have to deal with any of the async trait complexities, the
 
 However, I don't know about you, but the signatures of the trait method implementations look really ugly and verbose. 
 ```rust
-fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = Result<Option<Value>, String>> + Send>>
+fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send>>
 ```
 
 For instance, say we want downstream users or third-party library authors to implement their own cache stores, they would 
@@ -437,8 +440,8 @@ our previous `CacheStore`. We then provide a blanket implementation of this trai
 the `CacheStore` trait. The implementation simply delegates calls to the actual or concrete implementation of the `CacheStore` trait and 
 boxes the returned futures.
 
-You may also notice that we provided explicit lifetimes for the methods in `BoxedCacheStore`. This is crucial because of how Rust elision rules apply to trait objects.
-Without the explicit lifetimes, the compiler assumes `'static` for trait object methods:
+You may also notice that we provided explicit lifetimes for the methods in `BoxedCacheStore`. This is crucial because of how Rust [elision rules](https://doc.rust-lang.org/reference/lifetime-elision.html?#r-lifetime-elision.trait-object) apply to trait objects.
+Without the explicit lifetimes, the compiler assumes `'static` for the trait:
 
 ```rust
 fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = ...> + Send>>;
@@ -447,9 +450,8 @@ fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = ...> + Send>>;
 
 fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = ...> + Send + 'static>>;
 ```
-But our futures do borrow from `self` and `key` parameter, which means they cannot be `'static`. 
-By providing an explicit lifetime, we're essentially telling the compiler that the
-boxed future's lifetime is tied to the lifetime of the references it captures.
+But our futures do borrow from `self` and `key` parameter, which means they cannot be `'static` and makes omitting the explicit lifetime illegal.
+By providing an explicit lifetime, we're essentially telling the compiler that the boxed future's lifetime is tied to the lifetime of the references it captures.
 
 Now we update our `Memory` implementation as below:
 
