@@ -6,7 +6,6 @@ readingTime: "12 min read"
 slug: "ergonomic-async-trait-objects-rust"
 ---
 
-
 Async Rust can be a pain to deal with, and as library maintainers, it's crucial to do as much heavy lifting as possible so your users don't inherit the 
 headaches of dealing with it. We recently added support for dynamic cache backends in [cot](https://github.com/cot-rs/cot) and one small challenge was getting the API design and ergonomics right.
 The use cases and code used here were lifted directly from the codebase. Cot is a Rust web framework inspired by Django.
