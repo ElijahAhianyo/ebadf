@@ -227,7 +227,7 @@ const Post = () => {
             </div>
           </header>
           
-          <div className="prose prose-slate dark:prose-invert max-w-none
+            <div className="prose prose-slate dark:prose-invert max-w-none
                          prose-headings:font-bold prose-headings:tracking-tight
                          prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
                          prose-p:leading-relaxed prose-p:text-foreground/90
@@ -238,6 +238,19 @@ const Post = () => {
             <Markdown options={options}>
               {post?.content || ""}
             </Markdown>
+          </div>
+
+          {/* Feedback / contact blurb for each post */}
+          <div className="max-w-4xl mx-auto px-4 mt-8">
+            <div className="p-4 rounded-md bg-muted/30 dark:bg-muted/20 border border-border">
+              <p className="text-sm text-foreground/90">
+                Have any concerns with this post? Send me an email at{' '}
+                <a href="mailto:elijahahianyo@gmail.com" className="text-blue-600 dark:text-blue-400 underline">
+                  elijahahianyo@gmail.com
+                </a>
+                . I appreciate corrections and thoughtful feedback.
+              </p>
+            </div>
           </div>
         </article>
       </div>
