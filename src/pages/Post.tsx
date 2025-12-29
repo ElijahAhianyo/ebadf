@@ -244,11 +244,10 @@ const Post = () => {
           <div className="max-w-4xl mx-auto px-4 mt-8">
             <div className="p-4 rounded-md bg-muted/30 dark:bg-muted/20 border border-border">
               <p className="text-sm text-foreground/90">
-                Have any concerns with this post? Send me an email at{' '}
+                Have any suggestions or concerns with this post? Send me an email at{' '}
                 <a href="mailto:elijahahianyo@gmail.com" className="text-blue-600 dark:text-blue-400 underline">
                   elijahahianyo@gmail.com
                 </a>
-                . I appreciate corrections and thoughtful feedback.
               </p>
             </div>
           </div>
