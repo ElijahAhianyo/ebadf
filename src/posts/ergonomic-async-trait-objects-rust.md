@@ -273,7 +273,7 @@ impl CacheStore for Memory {
 
 By annotating the trait and its implementations with `#[async_trait]`, the crate takes care of the necessary transformations to make the async methods object safe.
 This allows us to use `dyn CacheStore` without running into object safety issues.
-However, `async-trait` comes with some performance overhead due to the way it implements async functions using heap allocation for futures.
+However we decided to limit the use of  `async-trait` because it sometimes generates error messages that were hard to debug.
 Also, using `async-trait` generates documentation littered with unnecessary details for trait methods which can make it hard to read. 
 For example, running `cargo doc --open` produces this for our `CacheStore` trait:
 
