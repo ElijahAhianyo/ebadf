@@ -19,7 +19,7 @@ const Post = () => {
     queryFn: () => getPostBySlug(slug as string),
   });
 
-  // Using Shiki via CodeBlock; no dynamic CSS injection needed
+
 
   if (isLoading) {
     return (
@@ -49,7 +49,7 @@ const Post = () => {
     );
   }
 
-  // Custom components for markdown
+
   const options = {
     overrides: {
       // Custom Note component support
@@ -72,27 +72,22 @@ const Post = () => {
       // Custom Accordion component support
       summary: {
         component: ({ children }: any) => {
-          // Store summary content in a special wrapper that details can find
           return <span data-accordion-summary="true">{children}</span>;
         }
       },
       details: {
         component: ({ children, ...props }: any) => {
-          // Extract title from summary element if present
           const childArray = React.Children.toArray(children);
           let title = props.title || 'Notes';
           let content = childArray;
           
-          // Find the summary element (marked with data-accordion-summary)
           const summaryIndex = childArray.findIndex((child: any) => 
             child?.props?.['data-accordion-summary'] === 'true'
           );
           
           if (summaryIndex !== -1) {
             const summaryElement = childArray[summaryIndex] as any;
-            // Extract the title from summary's children
             title = summaryElement.props.children;
-            // Get remaining content (everything except summary)
             content = childArray.filter((_, index) => index !== summaryIndex);
           }
           
@@ -103,7 +98,6 @@ const Post = () => {
           );
         }
       },
-      // Handle tables with better styling
       table: {
         component: ({ children, ...props }: any) => (
           <div className="my-8 overflow-x-auto rounded-lg border border-border shadow-sm">
@@ -148,21 +142,51 @@ const Post = () => {
           </td>
         )
       },
-      // Code highlighting
+      a: {
+        component: ({ href, children, ...props }: any) => (
+          <a
+            href={href}
+            className="text-blue-600 dark:text-blue-400 hover:underline transition-colors link"
+            target="_blank"
+            rel="noopener noreferrer"
+            {...props}
+          >
+            {children}
+          </a>
+        )
+      },
       code: {
         component: ({ className, children, ...props }: any) => {
-          const langMatch = (className || '').match(/\blang-([A-Za-z0-9_-]+)\b/);
-          const match = langMatch ? langMatch[1].toLowerCase() : null;
-          return match ? (
-            <CodeBlock className={className}>
-              {children}
-            </CodeBlock>
-          ) : (
-            <code 
-              className="px-1.5 py-0.5 rounded text-sm font-mono gangster" 
-              {...props}
-            >
-              {children}
+          const content = typeof children === 'string'
+            ? children
+            : Array.isArray(children)
+              ? children.join('')
+              : '';
+          
+          if (content.includes('\n')) {
+            console.log("first codeblock");
+            return (
+              <CodeBlock className={className}>
+                {content}
+              </CodeBlock>
+            );
+          }
+
+          const langMatch = (className || '').match(/\b(?:lang|language)-([A-Za-z0-9_-]+)\b/i);
+          const hasLang = !!langMatch;
+          if (hasLang) {
+            console.log("second code block\n");
+            return (
+              <CodeBlock className={className}>
+                {content}
+              </CodeBlock>
+            );
+          }
+
+
+          return (
+            <code className={`inline-code ${props.className || ''}`.trim()} {...props}>
+              {content}
             </code>
           );
         }
@@ -203,7 +227,7 @@ const Post = () => {
             </div>
           </header>
           
-          <div className="prose prose-slate dark:prose-invert max-w-none
+            <div className="prose prose-slate dark:prose-invert max-w-none
                          prose-headings:font-bold prose-headings:tracking-tight
                          prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
                          prose-p:leading-relaxed prose-p:text-foreground/90
@@ -214,6 +238,18 @@ const Post = () => {
             <Markdown options={options}>
               {post?.content || ""}
             </Markdown>
+          </div>
+
+          {/* Feedback / contact blurb for each post */}
+          <div className="max-w-4xl mx-auto px-4 mt-8">
+            <div className="p-4 rounded-md bg-muted/30 dark:bg-muted/20 border border-border">
+              <p className="text-sm text-foreground/90">
+                Have any suggestions or concerns with this post? Send me an email at{' '}
+                <a href="mailto:elijahahianyo@gmail.com" className="text-blue-600 dark:text-blue-400 underline">
+                  elijahahianyo@gmail.com
+                </a>
+              </p>
+            </div>
           </div>
         </article>
       </div>
