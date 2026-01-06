@@ -154,13 +154,7 @@ impl CacheStore for Memory {
         // implementation
     }
 
-    async fn insert(&self, key: &str, value: Value) -> CacheResult<()> { 
-        // implementation
-    }
-
-    async fn remove(&self, key: &str) -> CacheResult<()> { 
-        // implementation
-    }
+    ...
 }
 
 
@@ -184,12 +178,7 @@ impl CacheStore {
         self.store.insert(key.as_ref(), serde_json::to_value(serde_json::to_value(value)?)).await
     }
 
-    pub async fn remove<K: AsRef<str>>(&self, key: K) -> CacheResult<()>
-    where
-        K: AsRef<str>,
-    {
-        self.store.remove(key.as_ref()).await?
-    }
+    ...
 
 }
 ```
@@ -241,8 +230,7 @@ The issue with async functions in traits is that they desugar into functions tha
 ```rust
 pub trait CacheStore: Send + Sync + 'static{
     fn get(&self, key: &str) -> impl Future<Output = Result<Value, String>>;
-    fn insert(&mut self, key: &str, value: Value) -> impl Future<Output = Result<(), String>>;
-    fn remove(&mut self, key: &str) -> impl Future<Output = Result<(), String>>;
+    ...
 }
 ```
 
@@ -259,8 +247,7 @@ use async_trait::async_trait;
 #[async_trait]
 pub trait CacheStore: Send + Sync + 'static{
     async fn get(&self, key: &str) -> Result<Option<Value>, String>;
-    async fn insert(&self, key: &str, value: Value) -> Result<(), String>;
-    async fn remove(&self, key: &str) -> Result<(), String>;
+    ...
 }
 
 ...
@@ -269,12 +256,7 @@ impl CacheStore for Memory {
     async fn get(&self, key: &str) -> CacheResult<Option<Value>> {
         // implementation
     }
-    async fn insert(&self, key: &str, value: Value) -> CacheResult<()> { 
-        // implementation
-    }
-    async fn remove(&self, key: &str) -> CacheResult<()> { 
-        // implementation
-    }
+    ...
 }
 ```
 
@@ -333,8 +315,8 @@ use std::future::Future;
 
 pub trait CacheStore: Send + Sync + 'static{
     fn get(&self, key: &str) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send>>;
-    fn insert(&self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send>>;
-    fn remove(&self, key: &str) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send>>;
+    ...
+    // Other trait methods (insert and remove) should have similar signature.
 }
 ```
 
@@ -366,25 +348,7 @@ impl CacheStore for Memory {
         })
     }
 
-    fn insert(&self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send>> {
-        let map = self.map.clone();
-        let key = key.to_string();
-        Box::pin(async move {
-            let mut map = map.lock().unwrap();
-            map.insert(key, value);
-            Ok(())
-        })
-    }
-
-    fn remove(&self, key: &str) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send>> {
-        let map = self.map.clone();
-        let key = key.to_string();
-        Box::pin(async move {
-            let mut map = map.lock().unwrap();
-            map.remove(&key);
-            Ok(())
-        })
-    }
+   ...
 }
 ```
 
@@ -412,14 +376,12 @@ use serde_json::Value;
 
 pub(crate) trait BoxedCacheStore: Send + Sync + 'static {
     fn get<'a>(&'a self, key: &'a str) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send + 'a>>;
-    fn insert<'a>(&'a self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'a>>;
-    fn remove<'a>(&'a self, key: &'a str) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'a>>;
+    ...
 }
 
 pub trait CacheStore: Send + Sync + 'static {
     fn get(&self, key: &str) -> impl Future<Output = CacheResult<Option<Value>>> + Send;
-    fn insert(&self, key: &str, value: Value) -> impl Future<Output = CacheResult<()>> + Send;
-    fn remove(&self, key: &str) -> impl Future<Output = CacheResult<()>> + Send;
+    ...
 }
 
 impl<T: CacheStore> BoxedCacheStore for T {
@@ -429,16 +391,7 @@ impl<T: CacheStore> BoxedCacheStore for T {
         })
     }
 
-    fn insert<'a>(&'a self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'a>> {
-        Box::pin(async move {
-            T::insert(self, key, value).await
-        })
-    }
-
-    fn remove<'a>(&'a self, key: &'a str) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'a>> {
-        Box::pin(async move {
-            T::remove(self, key).await
-        })
+    ...
     }
 }
 ```
@@ -488,17 +441,7 @@ impl CacheStore for Memory {
         Ok(map.get(key).cloned())
     }
 
-    async fn insert(&self, key: &str, value: Value) -> CacheResult<()> {
-        let mut map = self.map.lock().unwrap();
-        map.insert(key, value);
-        Ok(())
-    }
-
-    async fn remove(&self, key: &str) -> CacheResult<()> {
-        let mut map = self.map.lock().unwrap();
-        map.remove(key);
-        Ok(())
-    }
+    ...
 }
 
 ```
@@ -536,25 +479,7 @@ impl Cache {
             .map_err(CacheError::from)
     }
 
-    pub async fn insert<K, V>(&self, key: K, value: V) -> CacheResult<()>
-    where
-        K: AsRef<str>,
-        V: Serialize,
-    {
-        self.store
-            .insert(
-                key.as_ref(),
-                serde_json::to_value(value)?,
-            )
-            .await?
-    }
-
-    pub async fn remove<K>(&self, key: K) -> CacheResult<()>
-    where
-        K: AsRef<str>,
-    {
-        self.store.remove(key.as_ref()).await
-    }
+    ...
 }
 ```
 
