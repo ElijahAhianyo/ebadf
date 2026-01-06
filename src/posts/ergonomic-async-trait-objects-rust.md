@@ -126,7 +126,7 @@ fn main() {
 
 ```
 
-This works just fine. However, the code is synchronous and does not scale, especially when you add other stores like `redis`, or`file` which perform I/O operations.
+This works just fine. However, the code is synchronous and does not scale, especially when you add other stores like `redis`, or `file` which perform I/O operations.
 This means we need to change the design to an asynchronous one. 
 
 ## The Naive Async Version
@@ -177,16 +177,16 @@ impl CacheStore {
     where
         K: AsRef<str>,
         V: Serialize,
-        {
-            self.store.insert(key.as_ref(), serde_json::to_value(serde_json::to_value(value)?)).await
-        }
+    {
+        self.store.insert(key.as_ref(), serde_json::to_value(serde_json::to_value(value)?)).await
+    }
 
     pub fn remove<K: AsRef<str>>(&self, key: K) -> CacheResult<()>
     where
         K: AsRef<str>,
-        {
-            self.store.remove(key.as_ref()).await?
-        }
+    {
+        self.store.remove(key.as_ref()).await?
+    }
 
 }
 ```
@@ -313,7 +313,7 @@ To answer that, we would need to do something similar to what `async-trait` does
 
 ##  Manual Pin and Boxed Futures
 As we mentioned earlier, async functions in traits desugar into functions that return `impl Future`, which are not object safe. However, we can work
-around this by Boxing the returned future ( `Box<dyn Future + Send>`), which makes it a concrete type and thus object safe. However, this is not 
+around this by Boxing the returned future (`Box<dyn Future + Send>`), which makes it a concrete type and thus object safe. However, this is not 
 enough because futures can be self-referential (they contain references to data within themselves), we also need to pin them in memory using `Pin`. 
 This prevents the future from being moved in memory, which would invalidate any internal references.
 
@@ -400,20 +400,19 @@ use std::pin::Pin;
 use std::future::Future;
 use serde_json::Value;
 
-pub(crate) trait BoxedCacheStore: Send + Sync + 'static{
+pub(crate) trait BoxedCacheStore: Send + Sync + 'static {
     fn get<'a>(&'a self, key: &'a str) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send + 'a>>;
     fn insert<'a>(&'a self, key: &str, value: Value) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'a>>;
     fn remove<'a>(&'a self, key: &'a str) -> Pin<Box<dyn Future<Output = CacheResult<()>> + Send + 'a>>;
 }
 
-pub trait CacheStore: Send + Sync + 'static{
+pub trait CacheStore: Send + Sync + 'static {
     fn get(&self, key: &str) -> impl Future<Output = CacheResult<Option<Value>>> + Send;
     fn insert(&self, key: &str, value: Value) -> impl Future<Output = CacheResult<()>> + Send;
     fn remove(&self, key: &str) -> impl Future<Output = CacheResult<()>> + Send;
 }
 
-impl<T: CacheStore> BoxedCacheStore for T
-{
+impl<T: CacheStore> BoxedCacheStore for T {
     fn get<'a>(&'a self, key: &'a str) -> Pin<Box<dyn Future<Output = CacheResult<Option<Value>>> + Send + 'a>> {
         Box::pin(async move {
             T::get(self, key).await
@@ -546,7 +545,7 @@ impl Cache {
 }
 ```
 
-As you can see,our store field now uses `BoxedCacheStore` as the trait object, but our public-facing API accepts anything that implements `CacheStore`. We 
+As you can see ,our store field now uses `BoxedCacheStore` as the trait object, but our public-facing API accepts anything that implements `CacheStore`. We 
 then cast the provided store to `BoxedCacheStore` when creating a new `Cache` instance.  This looks much better if you ask me.
 
 One downside of this approach is that it is more boilerplate heavy, and we now have more code to maintain.
