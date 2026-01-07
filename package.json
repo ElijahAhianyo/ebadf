@@ -8,8 +8,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "generate:og": "node scripts/generate-og.js",
-  "build": "npm run generate:og && vite build && cp -R dist/client/* dist/ && rm -rf dist/client && cp dist/index.html dist/404.html",
+    "generate:og": "bun ./scripts/generate-og.js",
+  "build": "bun ./scripts/generate-og.js && bunx --bun vite build && cp -R dist/client/* dist/ && rm -rf dist/client && cp dist/index.html dist/404.html",
+  "build:bun": "bun run build",
+  "vercel-build": "bunx --bun vite build && cp -R dist/client/* dist/ && rm -rf dist/client && cp dist/index.html dist/404.html",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
