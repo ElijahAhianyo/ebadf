@@ -392,7 +392,6 @@ impl<T: CacheStore> BoxedCacheStore for T {
     }
 
     ...
-    }
 }
 ```
 
