@@ -1,6 +1,7 @@
 export type Theme = "dark" | "light" | "system";
 
 export function getSystemTheme(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
@@ -15,8 +16,9 @@ export function setStoredTheme(theme: Theme) {
 }
 
 export function applyTheme(theme: Theme) {
+  if (typeof document === "undefined") return;
   const root = document.documentElement;
-  
+
   if (theme === "system") {
     const systemTheme = getSystemTheme();
     root.classList.toggle("dark", systemTheme === "dark");
