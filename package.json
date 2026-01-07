@@ -99,7 +99,7 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vike": "^0.4.250",
-    "vite": "^5.4.1",
+    "vite": "^6.3.0",
     "vite-plugin-prerender": "^1.0.8",
     "vite-plugin-ssr": "^0.4.142"
   }
