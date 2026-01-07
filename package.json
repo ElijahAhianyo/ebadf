@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "generate:og": "node scripts/generate-og.js",
-    "build": "npm run generate:og && vite build && cp dist/index.html dist/404.html",
+  "build": "npm run generate:og && vite build && cp -R dist/client/* dist/ && rm -rf dist/client && cp dist/index.html dist/404.html",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

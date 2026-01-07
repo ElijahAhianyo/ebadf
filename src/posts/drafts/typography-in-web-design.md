@@ -18,7 +18,8 @@ When selecting fonts for your website, consider the following:
 ✅ **Brand Identity:** Fonts should reflect your brand's personality.  
 ✅ **Contrast & Accessibility:** Maintain a good contrast between text and background.  
 
-### Popular Font Choices:  
+### Popular Font Choices  
+
 - **Serif Fonts:** Elegant, traditional (e.g., Times New Roman, Georgia).  
 - **Sans-serif Fonts:** Clean, modern (e.g., Roboto, Helvetica, Open Sans).  
 - **Monospace Fonts:** Technical, code-friendly (e.g., Courier New, Fira Code).  
@@ -31,7 +32,8 @@ The key to a well-balanced typography system is contrast and harmony. When pairi
 🔹 **Use a secondary font for body text** (e.g., a sans-serif for better readability).  
 🔹 **Maintain visual contrast** while ensuring a cohesive look.  
 
-### Example of Good Pairings:  
+### Example of Good Pairings  
+
 | Heading Font (Primary) | Body Font (Secondary) |
 |------------------------|----------------------|
 | Playfair Display       | Lato                 |
@@ -43,6 +45,7 @@ The key to a well-balanced typography system is contrast and harmony. When pairi
 ## Code Styling in Typography  
 
 Good typography applies to code as well. Ensure:  
+
 - Proper spacing for readability.  
 - Syntax highlighting for better understanding.  
 - A monospaced font to maintain alignment.
