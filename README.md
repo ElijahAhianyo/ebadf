@@ -1,2 +1,3 @@
 # Personal Website
-This is the repo for my [website](https://ebadf.me) generated using lovable.
+
+This is the repo for my [website](https://ebadf.me).
