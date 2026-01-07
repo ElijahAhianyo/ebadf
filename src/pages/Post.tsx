@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import Markdown from "markdown-to-jsx";
 import { Note } from "@/components/Note";
 import { MarkdownAccordion } from "@/components/MarkdownAccordion";
+import { PostMeta } from "@/components/PostMeta";
 import { useTheme } from "@/contexts/ThemeContext";
 import { CodeBlock } from "@/components/CodeBlock";
 
@@ -216,6 +217,17 @@ const Post = () => {
         </Link>
         
         <article className="space-y-8">
+          {post && (() => {
+            const meta: any = post.metadata || {};
+            return (
+              <PostMeta
+                title={meta.title}
+                description={meta.excerpt}
+                image={meta.image}
+                slug={meta.slug}
+              />
+            );
+          })()}
           <header className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">
               {post?.metadata.title}
