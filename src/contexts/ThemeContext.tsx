@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Theme, getStoredTheme, setStoredTheme, applyTheme, getSystemTheme } from "@/lib/theme";
+import {
+  Theme,
+  getStoredTheme,
+  setStoredTheme,
+  applyTheme,
+  getSystemTheme,
+} from "@/lib/theme";
 
 interface ThemeContextType {
   theme: Theme;
@@ -9,45 +15,82 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => getStoredTheme());
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">(() => {
-    if (theme === "system") return getSystemTheme();
-    return theme;
-  });
+
+  const [theme, setThemeState] = useState<Theme>("light");
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    setStoredTheme(newTheme);
-    applyTheme(newTheme);
-    
+    try {
+      if (typeof window !== "undefined") {
+        setStoredTheme(newTheme);
+        applyTheme(newTheme);
+      }
+    } catch {
+    }
+
     if (newTheme === "system") {
-      setResolvedTheme(getSystemTheme());
+      const system = typeof window !== "undefined" ? getSystemTheme() : "light";
+      setResolvedTheme(system);
     } else {
       setResolvedTheme(newTheme);
     }
   };
 
   useEffect(() => {
-    applyTheme(theme);
-    
-    if (theme === "system") {
-      setResolvedTheme(getSystemTheme());
-      
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      const handleChange = () => {
-        if (theme === "system") {
-          setResolvedTheme(getSystemTheme());
-          applyTheme("system");
+    if (typeof window === "undefined") return;
+
+    let chosen: Theme;
+    try {
+      const stored = getStoredTheme();
+      chosen = stored ?? "light";
+    } catch {
+      chosen = "light";
+    }
+
+    try {
+      applyTheme(chosen);
+    } catch {
+    }
+
+    setThemeState(chosen);
+
+    if (chosen === "system") {
+      try {
+        setResolvedTheme(getSystemTheme());
+      } catch {
+        setResolvedTheme("light");
+      }
+    } else {
+      setResolvedTheme(chosen === "light" ? "light" : "dark");
+    }
+
+    if (chosen === "system" && typeof window !== "undefined" && window.matchMedia) {
+      const mql = window.matchMedia("(prefers-color-scheme: dark)");
+      const handler = (ev: MediaQueryListEvent) => {
+        if (chosen === "system") {
+          const newResolved = ev.matches ? "dark" : "light";
+          setResolvedTheme(newResolved);
+          try {
+            applyTheme("system");
+          } catch {
+          }
         }
       };
-      
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    } else {
-      setResolvedTheme(theme);
+
+      if (mql.addEventListener) mql.addEventListener("change", handler);
+      else mql.addListener(handler);
+
+      return () => {
+        if (mql.removeEventListener) mql.removeEventListener("change", handler);
+        else mql.removeListener(handler);
+      };
     }
-  }, [theme]);
+
+    return;
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>
