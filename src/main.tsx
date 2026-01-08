@@ -1,9 +1,14 @@
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import { initializeTheme } from './lib/theme-init'
+import { ViteReactSSG } from 'vite-react-ssg'
+import { routes } from './App'
 
-// Initialize theme immediately to prevent flash of unstyled content
-initializeTheme();
+// Initialize theme immediately to prevent flash of unstyled content (only in browser)
+if (typeof document !== 'undefined') {
+	initializeTheme();
+}
 
-createRoot(document.getElementById("root")!).render(<App />);
+export const createRoot = ViteReactSSG({ routes }, ({router, routes, isClient, initialState}) => {
+	// any app-level async init for SSG can go here
+});
+
