@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Blogs from "./pages/Blogs";
 import ReadingList from "./pages/ReadingList";
+import BookDetail from "./pages/BookDetail";
 import Post from "./pages/Post";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/projects" element={<Projects />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/reading-list" element={<ReadingList />} />
+              <Route path="/reading-list/book/:id" element={<BookDetail />} />
               <Route path="/blog/:slug" element={<Post />} />
               <Route path="*" element={<NotFound />} />
               </Routes>
