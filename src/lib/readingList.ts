@@ -19,12 +19,14 @@ export const books: Book[] = [
     title: "Code: The Hidden Language of Computer Hardware and Software",
     author: "Charles Petzold",
     cover: "code.jpg",
-    tags: ["programming", "computer science"],
+    tags: ["computer architecture",],
     status: "previously-read",
     description:
-      "A sweeping narrative of human history that explores how Homo sapiens came to dominate the planet.",
-    externalLink: "https://www.ynharari.com/book/sapiens-2/",
-    thoughts: "A must-read. I keep returning to the sections on imagined orders.",
+      "A classic guide to the history and fundamentals of computer systems.",
+    externalLink: "https://www.codehiddenlanguage.com/",
+    thoughts: "I love this book because it talks through the evolution of computer systems and walks you through building \
+    certain components on the hardware level  from first principles. In my opinion this is a really good book if youre seeking \
+    an entry level into computer architechture.",
   },
   {
     id: "the-elements-of-computing-systems",
@@ -35,8 +37,11 @@ export const books: Book[] = [
     status: "previously-read",
     description:
       "A sweeping narrative of human history that explores how Homo sapiens came to dominate the planet.",
-    externalLink: "https://www.ynharari.com/book/sapiens-2/",
-    thoughts: "A must-read. I keep returning to the sections on imagined orders.",
+    externalLink: "https://www.nand2tetris.org/",
+    thoughts: "I read this book along side Code by Charles Petzold. It's typically coupled with the Nand2Tetris course. \
+    I love the projects after each chapter which forces you to think through building a computer from the ground up.\
+    The book uses custom emulators, languages, and tools to make it agnostic to any specific technology, however, I decided to implement \
+    the projects in industry-standard languages and tools. Eg, I used verilog for the Hardware description language and Nasm for the assembler.",
   },
   {
     id: "ostep",
@@ -46,9 +51,11 @@ export const books: Book[] = [
     tags: ["operating systems", "computer science"],
     status: "currently-reading",
     description:
-      "Techniques for improving codebases incrementally without breaking behavior.",
-    externalLink: "https://martinfowler.com/books/refactoring.html",
-    thoughts: "Working through examples is helping me see small, safe refactors.",
+      "The book is centered around three conceptual pieces that are fundamental to operating systems: virtualization, concurrency, and persistence",
+    externalLink: "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+    thoughts: "This is one of the best technical books I've ever read. The authors do a great job of breaking down complex topics \
+    with clear explanations and practical examples. My favorite thing about the books is the countless references and papers linked after \
+    each chapter for further reading.",
   },
   {
     id: "the_little_book_of_semaphores",
@@ -58,21 +65,21 @@ export const books: Book[] = [
     tags: ["concurrency", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      "This book introduces the principles of synchronization in concurrent programming.",
     externalLink: "https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "the_art_of_multiprocessor_programming",
     title: "The Art of Multiprocessor Programming",
-    author: "Maurice Herlihy, Nir Shavit",
+    author: "Maurice Herlihy, Nir Shavit, Victor Luchangco, Michael Spear",
     cover: "the-art-of-multiprocessor-programming.jpg",
     tags: ["concurrency", "programming"],
     status: "future",
     description:
       "Tips and philosophies to become a better software developer across your career.",
     externalLink: "https://www.amazon.com/Art-Multiprocessor-Programming-Maurice-Herlihy/dp/0124159508",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "the_garbage_collection_handbook",
@@ -82,9 +89,9 @@ export const books: Book[] = [
     tags: ["garbage collection", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      "This book provides a comprehensive introduction to the concepts, algorithms, and implementation techniques used in garbage collection.",
     externalLink: "https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "concurrency_the_work_of_leslie_lamport",
@@ -94,9 +101,11 @@ export const books: Book[] = [
     tags: ["concurrency", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      "This book is a celebration of Leslie Lamport's work on concurrency, interwoven in four-and-a-half decades of \
+      an evolving industry: from the introduction of the first personal computer to an era when parallel and distributed \
+      multiprocessors are abundant.",
     externalLink: "https://www.amazon.com/Concurrency-Works-Leslie-Lamport-Books/dp/1450372708",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "memory_systems_cache_dram_disk",
@@ -106,9 +115,9 @@ export const books: Book[] = [
     tags: ["memory", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      " An in-depth exploration of memory systems, covering cache architectures, DRAM technologies, and disk storage mechanisms.",
     externalLink: "https://www.amazon.com/Memory-Systems-Cache-DRAM-Disk/dp/0123797519",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "hackers_delight",
@@ -118,21 +127,22 @@ export const books: Book[] = [
     tags: ["programming", "algorithms"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      "The book is a collection of programming tricks and techniques for low-level programming and bit manipulation.",
     externalLink: "https://www.amazon.com/Hackers-Delight-2nd-Henry-Warren/dp/0321842685",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "the_cache_memory_book",
     title: "The Cache Memory Book",
-    author: "Morgan Kaufmann",
+    author: "Jim Handy",
     cover: "the-cache-memory-book.jpg",
     tags: ["memory", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      " The Cache Memory Book introduces systems designers to the concepts behind cache design. \
+      The book teaches the basic cache concepts and more exotic techniques.",
     externalLink: "https://www.amazon.com/Memory-Morgan-Kaufmann-Computer-Architecture/dp/0123229804",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "mordern_computer_architecture_and_organization",
@@ -142,9 +152,10 @@ export const books: Book[] = [
     tags: ["architecture", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      "A no-nonsense, practical guide to current and future processor and computer architectures,\
+       enabling you to design computer systems and develop better software applications across a variety of domains",
     externalLink: "https://www.amazon.com/Modern-Computer-Architecture-Organization-architectures/dp/1838984399",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
   },
   {
     id: "building_a_debugger",
@@ -154,9 +165,23 @@ export const books: Book[] = [
     tags: ["debugging", "programming"],
     status: "future",
     description:
-      "Tips and philosophies to become a better software developer across your career.",
+      "Master the inner workings of your x64 Linux system and expand your OS expertise by writing your very own debugger using C++.",
     externalLink: "https://www.amazon.com/Building-Debugger-Sy-Brand/dp/171850408X/",
-    thoughts: "Planning to read this during my next tooling sprint.",
+    thoughts: "",
+  },
+  {
+    id: "operating_systems_from_0_to_1",
+    title: "Operating Systems: From 0 to 1",
+    cover: "operating-systems-o-to-1.png",
+    author: "Tu, Do Hoang",
+    tags: ["operating systems", "programming"],
+    status: "currently-reading",
+    description:
+      "Master the inner workings of your x64 Linux system and expand your OS expertise by writing your very own debugger using C++.",
+    externalLink: "https://github.com/tuhdo/os01?tab=readme-ov-file",
+    thoughts: "Many operating systems books focus on the theoretical and kernel aspects of OS design. This book explores the \
+    practical and hardware side of OS design. Basically a walkthrough of building a simple OS from scratch. I started reading this to gain a \
+    deeper understanding of how OSes interact with hardware at a low level.",
   },
 ];
 
