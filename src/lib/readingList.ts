@@ -200,15 +200,16 @@ export type Article = {
 };
 
 export const articles: Article[] = [
-//   {
-//     id: "ergonomic-async-trait-objects",
-//     title: "Ergonomic async trait objects in Rust",
-//     authors: "Elijah Ahianyo",
-//     thumb: "code.jpg",
-//     tags: ["rust", "async", "systems"],
-//     externalLink: "https://eli.example.com/ergonomic-async-trait-objects-rust",
-//     description: "A deep-dive into ergonomic async trait objects and their implementation trade-offs.",
-//   },
+  {
+    id: "back-to-basics",
+    title: "Back to Basics",
+    authors: "Joel Spolsky",
+    thumb: "back-to-basics.png",
+    tags: ["software development", "best practices"],
+    externalLink: "https://www.joelonsoftware.com/2001/12/11/back-to-basics/",
+    description: "Love this article. The kind that nudges you to dig deeper into the fundamentals. The only way to survive \
+    in this grueling industry.",
+  },
 ];
 
 export function getArticleById(id: string) {
@@ -233,11 +234,22 @@ export const papers: Paper[] = [
     title: "What Every Programmer Should Know About Memory",
     authors: "Ulrich Drepper",
     thumb: "what-every-programmer-should-know-about-memory.png",
-    tags: ["distributed", "consensus"],
+    tags: ["memory"],
     externalLink: "https://people.freebsd.org/~lstewart/articles/cpumemory.pdf",
     venue: "Memory Systems",
     year: 2001,
     description: "An in-depth look at memory architectures and their implications for programmers.",
+  },
+  {
+    id: "information-and-control-in-gray-box-systems",
+    title: "Information and Control in Gray Box Systems",
+    authors: "Remzi H. Arpaci-Dusseau, Andrea C. Arpaci-Dusseau",
+    thumb: "information-and-control-in-gray-box-systems.png",
+    tags: ["virtualization","gray-box systems"],
+    externalLink: "https://dl.acm.org/doi/10.1145/502034.502040",
+    venue: "Memory Systems",
+    year: 2001,
+    description: "A paper that talks about various techniques to employ when dealing with gray-box systems.",
   },
 ];
 

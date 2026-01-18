@@ -255,7 +255,7 @@ import { useState, useMemo } from "react";
                       className="block p-4 rounded-lg border hover:shadow-md transition bg-card"
                     >
                       <div className="flex items-start gap-4">
-                        <img src={cloudinaryFetch(((a.thumb || "/placeholder.svg").startsWith("http") || (a.thumb || "").startsWith("/") ? (a.thumb || "/placeholder.svg") : `${S3_BASE}/${a.thumb}`), { w: 120, h: 160, crop: "fill" })} alt={a.title} className="w-20 h-35 object-cover rounded" />
+                        <img src={cloudinaryFetch(((a.thumb || "/placeholder.svg").startsWith("http") || (a.thumb || "").startsWith("/") ? (a.thumb || "/placeholder.svg") : `${S3_BASE}/${a.thumb}`), { w: 120, h: 162, crop: "fill" })} alt={a.title} className="w-20 h-35 object-cover rounded" />
                         <div>
                           <h3 className="text-lg font-semibold">{a.title}</h3>
                           <p className="text-sm text-muted-foreground">{a.authors}</p>
