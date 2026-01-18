@@ -45,7 +45,7 @@ export const projects: Project[] = [
   {
     id: 'ser',
     title: 'Ser',
-    description: 'a toy programming language',
+    description: 'an unfinished toy programming language built with rust',
     longDescription: 'A simple programming language built with Rust.',
     url: 'https://github.com/ElijahAhianyo/ser',
     githubUrl: 'https://github.com/ElijahAhianyo/ser',
@@ -53,6 +53,20 @@ export const projects: Project[] = [
     category: 'personal',
     featured: false,
     date: '2025-08-17',
+    status: 'active'
+  },
+
+  {
+    id: 'xmalloc',
+    title: 'Xmalloc',
+    description: 'a rudimentary memory allocator written in aarch64 assembly for educational purposes',
+    longDescription: 'A simple memory allocator built with aarch64 assembly for educational purposes.',
+    url: 'https://github.com/ElijahAhianyo/xmalloc',
+    githubUrl: 'https://github.com/ElijahAhianyo/xmalloc',
+    technologies: ["Assembly", "aarch64"],
+    category: 'personal',
+    featured: false,
+    date: '2025-11-10',
     status: 'active'
   },
   
