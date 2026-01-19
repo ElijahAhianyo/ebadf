@@ -58,8 +58,8 @@ export function ProjectCard({ project, showDescription = true, className }: Proj
               {project.title}
             </CardTitle>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Calendar className="h-4 w-4" />
-              <span>{formatDate(project.date)}</span>
+              {/* <Calendar className="h-4 w-4" /> */}
+              {/* <span>{formatDate(project.date)}</span> */}
               <Badge 
                 variant="secondary" 
                 className={cn("text-xs", getStatusColor(project.status))}

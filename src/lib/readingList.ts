@@ -170,6 +170,18 @@ export const books: Book[] = [
     thoughts: "",
   },
   {
+    id: "database_internals",
+    title: "Database Internals",
+    cover: "database-internals.jpg",
+    author: "Alex Petrov",
+    tags: ["database", "distributed systems"],
+    status: "future",
+    description:
+      "This book provides a deep dive into the architecture and design of modern distributed database systems.",
+    externalLink: "https://www.amazon.com/Database-Internals-Deep-Distributed-Systems/dp/1492040347",
+    thoughts: "",
+  },
+  {
     id: "operating_systems_from_0_to_1",
     title: "Operating Systems: From 0 to 1",
     cover: "operating-systems-o-to-1.png",
