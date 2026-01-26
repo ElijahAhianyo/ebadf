@@ -49,7 +49,7 @@ export const books: Book[] = [
     author: "Remzi H. Arpaci-Dusseau, Andrea C. Arpaci-Dusseau",
     cover: "ostep.jpg",
     tags: ["operating systems", "computer science"],
-    status: "currently-reading",
+    status: "previously-read",
     description:
       "The book is centered around three conceptual pieces that are fundamental to operating systems: virtualization, concurrency, and persistence",
     externalLink: "https://pages.cs.wisc.edu/~remzi/OSTEP/",
@@ -137,7 +137,7 @@ export const books: Book[] = [
     author: "Jim Handy",
     cover: "the-cache-memory-book.jpg",
     tags: ["memory", "programming"],
-    status: "future",
+    status: "currently-reading",
     description:
       " The Cache Memory Book introduces systems designers to the concepts behind cache design. \
       The book teaches the basic cache concepts and more exotic techniques.",
