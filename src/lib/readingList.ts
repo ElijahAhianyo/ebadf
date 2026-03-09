@@ -137,7 +137,7 @@ export const books: Book[] = [
     author: "Jim Handy",
     cover: "the-cache-memory-book.jpg",
     tags: ["memory", "programming"],
-    status: "currently-reading",
+    status: "previously-read",
     description:
       " The Cache Memory Book introduces systems designers to the concepts behind cache design. \
       The book teaches the basic cache concepts and more exotic techniques.",
@@ -195,6 +195,31 @@ export const books: Book[] = [
     practical and hardware side of OS design. Basically a walkthrough of building a simple OS from scratch. I started reading this to gain a \
     deeper understanding of how OSes interact with hardware at a low level.",
   },
+  {
+    id: "handbook-of-computer-architechture",
+    title: "Handbook of computer architechture",
+    cover: "handbook-of-architechture.jpg",
+    author: "Anupam Chattopadhyay",
+    tags: ["computer architecture"],
+    status: "future",
+    description:
+      "presents the key topics in the area of computer architecture covering from the basic to the most advanced topics, including software and hardware design methodologies.",
+    externalLink: "https://www.amazon.com/Handbook-Computer-Architecture-Anupam-Chattopadhyay-ebook/dp/B0DR5462K7",
+    thoughts: "",
+  },
+  {
+    id: "memory-consistency-and-cache-coherence",
+    title: "A Primer on Memory Consistency and Cache Coherence",
+    cover: "primer-cache-coherence.jpg",
+    author: "Vijay Nagarajan, Daniel J. Sorin, Mark D. Hill, David A. Wood",
+    tags: ["computer architecture", "caches"],
+    status: "currently-reading",
+    description:
+      "A deep dive into cache coherence and memory models.",
+    externalLink: "https://pages.cs.wisc.edu/~markhill/papers/primer2020_2nd_edition.pdf",
+    thoughts: "",
+  },
+
 ];
 
 export function getBookById(id: string) {
@@ -221,6 +246,15 @@ export const articles: Article[] = [
     externalLink: "https://www.joelonsoftware.com/2001/12/11/back-to-basics/",
     description: "Love this article. The kind that nudges you to dig deeper into the fundamentals. The only way to survive \
     in this grueling industry.",
+  },
+  {
+    id: "general-purpose-multicore-arch",
+    title: "General-Purpose Multicore Architechtures",
+    authors: "Saugata Ghose",
+    thumb: "general-purpose-multicore.png",
+    tags: ["computer architecture"],
+    externalLink: "https://arxiv.org/html/2408.12999v2",
+    description: "Talks about the evolution and anatomy of single and multi-core processors",
   },
 ];
 
@@ -259,9 +293,20 @@ export const papers: Paper[] = [
     thumb: "information-and-control-in-gray-box-systems.png",
     tags: ["virtualization","gray-box systems"],
     externalLink: "https://dl.acm.org/doi/10.1145/502034.502040",
-    venue: "Memory Systems",
+    venue: "Gray Box Systems",
     year: 2001,
     description: "A paper that talks about various techniques to employ when dealing with gray-box systems.",
+  },
+  {
+    id: "memory-processor-computer-that-correctly-executes-multiprocess-programs",
+    title: "How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs",
+    authors: "Lamport",
+    thumb: "multiprocessor-correct-program.png",
+    tags: ["multiprocessing"],
+    externalLink: "https://ieeexplore.ieee.org/abstract/document/1675439",
+    venue: "Memory Systems",
+    year: 1979,
+    description: "",
   },
 ];
 
