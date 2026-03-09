@@ -235,7 +235,7 @@ export type Article = {
   externalLink: string;
   description?: string;
 };
-//General-Purpose Multicore Architectures
+
 export const articles: Article[] = [
   {
     id: "back-to-basics",
