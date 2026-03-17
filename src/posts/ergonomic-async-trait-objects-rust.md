@@ -1,7 +1,7 @@
 ---
 title: "Ergonomic Async Trait Objects in Rust"
 excerpt: "Designing ergonomic async trait interfaces in Rust"
-date: "2026-06-25"
+date: "2025-12-25"
 readingTime: "12 min read"
 slug: "ergonomic-async-trait-objects-rust"
 ---
