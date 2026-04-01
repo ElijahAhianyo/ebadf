@@ -175,7 +175,7 @@ export const books: Book[] = [
     cover: "database-internals.jpg",
     author: "Alex Petrov",
     tags: ["database", "distributed systems"],
-    status: "future",
+    status: "currently-reading",
     description:
       "This book provides a deep dive into the architecture and design of modern distributed database systems.",
     externalLink: "https://www.amazon.com/Database-Internals-Deep-Distributed-Systems/dp/1492040347",
@@ -213,7 +213,7 @@ export const books: Book[] = [
     cover: "primer-cache-coherence.jpg",
     author: "Vijay Nagarajan, Daniel J. Sorin, Mark D. Hill, David A. Wood",
     tags: ["computer architecture", "caches"],
-    status: "currently-reading",
+    status: "previously-read",
     description:
       "A deep dive into cache coherence and memory models.",
     externalLink: "https://pages.cs.wisc.edu/~markhill/papers/primer2020_2nd_edition.pdf",
