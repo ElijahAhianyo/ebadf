@@ -1,9 +1,15 @@
 import BlogCard from "@/components/BlogCard";
 import { Book, FileText, Sparkles } from "lucide-react";
 import { getAllPosts } from "@/lib/posts";
+import type { PostSource } from "@/lib/posts";
 
-const Blogs = () => {
-  const posts = getAllPosts();
+interface BlogsProps {
+  postSource?: PostSource;
+}
+
+const Blogs = ({ postSource = 'published' }: BlogsProps) => {
+  const isDraft = postSource === 'draft';
+  const posts = getAllPosts(postSource);
 
   return (
     <div className="min-h-screen pt-24 pb-16 px-4">
@@ -26,7 +32,7 @@ const Blogs = () => {
                   className="animate-fade-up"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <BlogCard {...post} />
+                  <BlogCard {...post} basePath={isDraft ? '/draft/blog' : '/blog'} />
                 </div>
               ))
             ) : (

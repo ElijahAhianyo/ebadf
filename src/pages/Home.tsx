@@ -4,9 +4,17 @@ import { getFeaturedProjects, getPersonalProjects, getOpenSourceProjects } from 
 import { Github, Linkedin, Mail, ArrowRight, Code, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/ProjectCard";
+import type { PostSource } from "@/lib/posts";
 
-const Home = () => {
-  const posts = getAllPosts().slice(0, 3); // Show only first 3 posts
+interface HomeProps {
+  postSource?: PostSource;
+}
+
+const Home = ({ postSource = 'published' }: HomeProps) => {
+  const isDraft = postSource === 'draft';
+  const blogPath = isDraft ? '/draft/blog' : '/blog';
+  const blogsPath = isDraft ? '/draft/blogs' : '/blogs';
+  const posts = getAllPosts(postSource).slice(0, 3); // Show only first 3 posts
   const featuredProjects = getFeaturedProjects().slice(0, 3);
   const personalProjects = getPersonalProjects().slice(0, 2);
   const openSourceProjects = getOpenSourceProjects().slice(0, 2);
@@ -27,7 +35,7 @@ const Home = () => {
                 Hey, I'm Elijah Ahianyo
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm a passionate software engineer from Ghana who loves to code.
+                I'm a passionate software engineer who loves to code.
                 My interests currently lie in OSS, web dev tooling and systems programming.
                 I use Rust daily, but I also write C, Python and Assembly when I have to. I am currently a maintainer
                 of the <u><a href="https://github.com/cot-rs/cot">Cot</a></u> Rust web framework and the <u><a href="https://codeberg.org/CharlotteOS">Charlotte operating system</a></u>
@@ -63,7 +71,7 @@ const Home = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold">Recent Posts</h2>
             <Button variant="outline" asChild>
-              <Link to="/blogs">View All Posts</Link>
+              <Link to={blogsPath}>View All Posts</Link>
             </Button>
           </div>
 
@@ -71,7 +79,7 @@ const Home = () => {
             {posts.map((post, index) => (
               <Link
                 key={post.slug}
-                to={`/blog/${post.slug}`}
+                to={`${blogPath}/${post.slug}`}
                 className="group p-6 rounded-lg border hover:border-primary/50 transition-colors"
               >
                 <div className="space-y-2">

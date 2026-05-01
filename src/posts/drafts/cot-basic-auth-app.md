@@ -3,7 +3,6 @@ title: "Building a basic auth app with cot.rs"
 excerpt: "Cot is a relatively new rust web framework. However, there are relatively few resources out there on how to build apps with it..."
 date: "2025-07-17"
 readingTime: "6 min read"
-slug: "cot-basic-auth-app"
 featured: true
 ---
 
