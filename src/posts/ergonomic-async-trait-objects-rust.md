@@ -3,7 +3,6 @@ title: "Ergonomic Async Trait Objects in Rust"
 excerpt: "Designing ergonomic async trait interfaces in Rust"
 date: "2025-12-25"
 readingTime: "12 min read"
-slug: "ergonomic-async-trait-objects-rust"
 ---
 
 Async Rust can be a pain to deal with, and as library maintainers, it's crucial to do as much heavy lifting as possible so your users don't inherit the

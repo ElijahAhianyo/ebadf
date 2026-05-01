@@ -1,6 +1,8 @@
 
 import frontMatter from 'front-matter';
 
+export type PostSource = 'published' | 'draft';
+
 interface PostMetadata {
   title: string;
   excerpt: string;
@@ -15,12 +17,22 @@ interface PostAttributes {
   excerpt: string;
   date: string;
   readingTime: string;
-  slug: string;
   featured?: boolean;
 }
 
-export function getAllPosts(): PostMetadata[] {
-  const posts = import.meta.glob('../posts/*.md', { eager: true, as: 'raw' });
+function getSlugFromFilepath(filepath: string): string {
+  return filepath.split('/').pop()?.replace(/\.md$/, '') ?? '';
+}
+
+function getPostFiles(source: PostSource) {
+  const publishedPosts = import.meta.glob('../posts/*.md', { eager: true, query: '?raw', import: 'default' });
+  const draftPosts = import.meta.glob('../posts/drafts/*.md', { eager: true, query: '?raw', import: 'default' });
+
+  return source === 'draft' ? draftPosts : publishedPosts;
+}
+
+export function getAllPosts(source: PostSource = 'published'): PostMetadata[] {
+  const posts = getPostFiles(source);
   
   const processedPosts = Object.entries(posts)
     .map(([filepath, content]) => {
@@ -31,7 +43,7 @@ export function getAllPosts(): PostMetadata[] {
           excerpt: attributes.excerpt,
           date: attributes.date,
           readingTime: attributes.readingTime,
-          slug: attributes.slug,
+          slug: getSlugFromFilepath(filepath),
           featured: attributes.featured ?? false, // Use nullish coalescing
         };
         return post;
@@ -45,10 +57,10 @@ export function getAllPosts(): PostMetadata[] {
   return processedPosts;
 }
 
-export async function getPostBySlug(slug: string) {
-  const posts = import.meta.glob('../posts/*.md', { eager: true, as: 'raw' });
-  const postContent = Object.entries(posts).find(([filepath]) => 
-    filepath.includes(slug)
+export async function getPostBySlug(slug: string, source: PostSource = 'published') {
+  const posts = getPostFiles(source);
+  const postContent = Object.entries(posts).find(([filepath]) =>
+    getSlugFromFilepath(filepath) === slug
   )?.[1];
 
   if (!postContent) {
@@ -62,7 +74,7 @@ export async function getPostBySlug(slug: string) {
       excerpt: attributes.excerpt,
       date: attributes.date,
       readingTime: attributes.readingTime,
-      slug: attributes.slug,
+      slug,
       featured: attributes.featured ?? false,
     },
     content: body

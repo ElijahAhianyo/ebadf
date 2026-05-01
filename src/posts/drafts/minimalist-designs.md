@@ -3,7 +3,6 @@ title: "Creating Minimalist Designs That Stand Out"
 excerpt: "Learn how to create impactful minimalist designs that capture attention while maintaining simplicity and elegance..."
 date: "2024-03-14"
 readingTime: "5 min read"
-slug: "minimalist-designs"
 ---
 
 # Creating Minimalist Designs That Stand Out

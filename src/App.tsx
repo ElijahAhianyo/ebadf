@@ -29,11 +29,14 @@ const App = () => (
             <main className="flex-1">
               <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/draft" element={<Home postSource="draft" />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/blogs" element={<Blogs />} />
+              <Route path="/draft/blogs" element={<Blogs postSource="draft" />} />
               <Route path="/reading-list" element={<ReadingList />} />
               <Route path="/reading-list/book/:id" element={<BookDetail />} />
               <Route path="/blog/:slug" element={<Post />} />
+              <Route path="/draft/blog/:slug" element={<Post postSource="draft" />} />
               <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
