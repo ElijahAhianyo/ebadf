@@ -86,6 +86,37 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .not-found-float {
+    animation: not-found-float 4s ease-in-out infinite;
+  }
+
+  .not-found-scan {
+    animation: not-found-scan 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes not-found-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes not-found-scan {
+  0% {
+    transform: translateY(-3rem);
+    opacity: 0;
+  }
+  20%, 80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10rem);
+    opacity: 0;
+  }
 }
 
 /* Custom table styling */
