@@ -8,12 +8,13 @@ interface BlogCardProps {
   readingTime: string;
   slug: string;
   featured?: boolean;
+  basePath?: string;
 }
 
-const BlogCard = ({ title, excerpt, date, readingTime, slug, featured }: BlogCardProps) => {
+const BlogCard = ({ title, excerpt, date, readingTime, slug, featured, basePath = '/blog' }: BlogCardProps) => {
   return (
     <Link
-      to={`/blog/${slug}`}
+      to={`${basePath}/${slug}`}
       className={`
         block group p-6 rounded-lg transition-all duration-300 hover:shadow-sm hover:-translate-y-1 hover:shadow-lg border border-border hover:border-primary/50
         ${featured ? 'border-l-4 border-blog-300' : ''}
