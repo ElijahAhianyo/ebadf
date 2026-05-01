@@ -3,6 +3,13 @@ import frontMatter from 'front-matter';
 
 export type PostSource = 'published' | 'draft';
 
+export class PostNotFoundError extends Error {
+  constructor(slug: string, source: PostSource) {
+    super(`Post with slug ${slug} not found in ${source} posts`);
+    this.name = 'PostNotFoundError';
+  }
+}
+
 interface PostMetadata {
   title: string;
   excerpt: string;
@@ -64,7 +71,7 @@ export async function getPostBySlug(slug: string, source: PostSource = 'publishe
   )?.[1];
 
   if (!postContent) {
-    throw new Error(`Post with slug ${slug} not found`);
+    throw new PostNotFoundError(slug, source);
   }
 
   const { attributes, body } = frontMatter<PostAttributes>(postContent as string);

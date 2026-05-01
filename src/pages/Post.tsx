@@ -10,6 +10,7 @@ import { MarkdownAccordion } from "@/components/MarkdownAccordion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { CodeBlock } from "@/components/CodeBlock";
 import type { PostSource } from "@/lib/posts";
+import NotFound from "./NotFound";
 
 const getTextContent = (children: React.ReactNode): string => {
   return React.Children.toArray(children)
@@ -79,6 +80,7 @@ const Post = ({ postSource = 'published' }: PostProps) => {
   const { data: post, isLoading, error } = useQuery({
     queryKey: ['post', postSource, slug],
     queryFn: () => getPostBySlug(slug as string, postSource),
+    retry: false,
   });
 
   React.useEffect(() => {
@@ -115,13 +117,7 @@ const Post = ({ postSource = 'published' }: PostProps) => {
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-muted/30 pt-24">
-        <div className="max-w-4xl mx-auto px-4 py-16">
-          <p className="text-destructive">Error loading post</p>
-        </div>
-      </div>
-    );
+    return <NotFound variant="post" returnTo={postSource === 'draft' ? '/draft/blogs' : '/blogs'} />;
   }
 
 
