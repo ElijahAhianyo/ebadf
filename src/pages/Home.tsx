@@ -101,7 +101,7 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
         </section>
 
         {/* Featured Projects */}
-        <section className="space-y-8">
+        {/* <section className="space-y-8">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold">Featured Projects</h2>
             <Button variant="outline" asChild>
@@ -114,10 +114,10 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Personal Projects Preview */}
-        <section className="space-y-6">
+        {/* <section className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
@@ -143,10 +143,10 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Open Source Projects Preview */}
-        <section className="space-y-6">
+        {/* <section className="space-y-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
@@ -172,7 +172,7 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );
