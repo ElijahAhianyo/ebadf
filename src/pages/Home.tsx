@@ -41,7 +41,7 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
                 I'm a passionate software engineer who loves to code.
                 My interests currently lie in OSS, web dev tooling and systems programming.
                 I use Rust daily, but I also write C, Python and Assembly when I have to. I am currently a maintainer
-                of the <u><a href="https://github.com/cot-rs/cot">Cot</a></u> Rust web framework and the <u><a href="https://codeberg.org/CharlotteOS">Charlotte operating system</a></u>
+                of the <u><a href="https://github.com/cot-rs/cot">Cot</a></u> Rust web framework.
               </p>
             </div>
           </div>
