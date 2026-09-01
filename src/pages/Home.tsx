@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { getAllPosts } from "@/lib/posts";
+import { getHomeWarStories } from "@/lib/warStories";
 import { getFeaturedProjects, getPersonalProjects, getOpenSourceProjects } from "@/lib/projects";
 import { Github, Linkedin, Mail, ArrowRight, Code, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/ProjectCard";
+import WarStoryCard from "@/components/WarStoryCard";
 import type { PostSource } from "@/lib/posts";
 
 interface HomeProps {
@@ -15,6 +17,7 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
   const blogPath = isDraft ? '/draft/blog' : '/blog';
   const blogsPath = isDraft ? '/draft/blogs' : '/blogs';
   const posts = getAllPosts(postSource).slice(0, 3); // Show only first 3 posts
+  const warStories = isDraft ? [] : getHomeWarStories();
   const featuredProjects = getFeaturedProjects().slice(0, 3);
   const personalProjects = getPersonalProjects().slice(0, 2);
   const openSourceProjects = getOpenSourceProjects().slice(0, 2);
@@ -98,6 +101,23 @@ const Home = ({ postSource = 'published' }: HomeProps) => {
               </Link>
             ))}
           </div>
+
+          {!isDraft && warStories.length > 0 && (
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold">War Stories</h3>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/war-stories">View All War Stories</Link>
+                </Button>
+              </div>
+
+              <div className="grid gap-6">
+                {warStories.map((story) => (
+                  <WarStoryCard key={story.slug} story={story} />
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Featured Projects */}

@@ -9,17 +9,18 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     // { name: "Projects", path: "/projects" },
     { name: "Blogs", path: "/blogs" },
+    { name: "War Stories", path: "/war-stories" },
     { name: "Reading List", path: "/reading-list" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-foreground">
+      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        <Link to="/" className="flex-shrink-0 text-lg sm:text-xl font-bold text-foreground">
           Elijah Ahianyo
         </Link>
         
-        <div className="flex items-center space-x-8">
+        <div className="flex min-w-0 items-center gap-4 overflow-x-auto sm:gap-8">
           {navItems.map((item) => (
             <Link
               key={item.name}
