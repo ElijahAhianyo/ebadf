@@ -10,6 +10,8 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import Blogs from "./pages/Blogs";
+import WarStories from "./pages/WarStories";
+import WarStory from "./pages/WarStory";
 import ReadingList from "./pages/ReadingList";
 import BookDetail from "./pages/BookDetail";
 import Post from "./pages/Post";
@@ -33,6 +35,8 @@ const App = () => (
               <Route path="/projects" element={<Projects />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/draft/blogs" element={<Blogs postSource="draft" />} />
+              <Route path="/war-stories" element={<WarStories />} />
+              <Route path="/war-stories/:slug" element={<WarStory />} />
               <Route path="/reading-list" element={<ReadingList />} />
               <Route path="/reading-list/book/:id" element={<BookDetail />} />
               <Route path="/blog/:slug" element={<Post />} />

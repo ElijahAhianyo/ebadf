@@ -1,30 +1,22 @@
-
 import React from "react";
-import { useParams, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getPostBySlug } from "@/lib/posts";
 import { ArrowLeft } from "lucide-react";
-import { useTheme } from "@/contexts/ThemeContext";
-import type { PostSource } from "@/lib/posts";
-import NotFound from "./NotFound";
 import { MarkdownContent } from "@/components/MarkdownContent";
+import { getWarStoryBySlug } from "@/lib/warStories";
+import NotFound from "./NotFound";
 
-interface PostProps {
-  postSource?: PostSource;
-}
-
-const Post = ({ postSource = 'published' }: PostProps) => {
+const WarStory = () => {
   const { slug } = useParams();
-  const { theme } = useTheme();
 
-  const { data: post, isLoading, error } = useQuery({
-    queryKey: ['post', postSource, slug],
-    queryFn: () => getPostBySlug(slug as string, postSource),
+  const { data: story, isLoading, error } = useQuery({
+    queryKey: ["war-story", slug],
+    queryFn: () => getWarStoryBySlug(slug as string),
     retry: false,
   });
 
   React.useEffect(() => {
-    if (!post?.content || !window.location.hash) {
+    if (!story?.content || !window.location.hash) {
       return;
     }
 
@@ -36,7 +28,7 @@ const Post = ({ postSource = 'published' }: PostProps) => {
         target.scrollIntoView({ block: "start" });
       });
     }
-  }, [post?.content, slug]);
+  }, [story?.content, slug]);
 
   if (isLoading) {
     return (
@@ -57,49 +49,51 @@ const Post = ({ postSource = 'published' }: PostProps) => {
   }
 
   if (error) {
-    return <NotFound variant="post" returnTo={postSource === 'draft' ? '/draft/blogs' : '/blogs'} />;
+    return <NotFound variant="post" returnTo="/war-stories" />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/30 pt-24">
       <div className="max-w-4xl mx-auto px-4 py-16">
-        <RouterLink 
-          to={postSource === 'draft' ? '/draft/blogs' : '/blogs'} 
+        <RouterLink
+          to="/war-stories"
           className="inline-flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to posts</span>
+          <span>Back to war stories</span>
         </RouterLink>
-        
+
         <article className="space-y-8">
           <header className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">
-              {post?.metadata.title}
+              {story?.metadata.title}
             </h1>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <time>{post?.metadata.date}</time>
-              <span>•</span>
-              <span>{post?.metadata.readingTime}</span>
-            </div>
-          </header>
-          
-          <MarkdownContent content={post?.content || ""} />
 
-          {/* Feedback / contact blurb for each post */}
-          <div className="max-w-4xl mx-auto px-4 mt-8">
-            <div className="p-4 rounded-md bg-muted/30 dark:bg-muted/20 border border-border">
-              <p className="text-sm text-foreground/90">
-                Have any suggestions or concerns with this post? Send me an email at{' '}
-                <a href="mailto:elijahahianyo@gmail.com" className="text-blue-600 dark:text-blue-400 underline">
-                  elijahahianyo@gmail.com
-                </a>
-              </p>
+            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+              <time dateTime={story?.metadata.date}>{story?.metadata.date}</time>
+              <span>•</span>
+              <span>{story?.metadata.readingTime}</span>
             </div>
-          </div>
+
+            {story?.metadata.categories && story.metadata.categories.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {story.metadata.categories.map((category) => (
+                  <span
+                    key={category}
+                    className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                  >
+                    {category}
+                  </span>
+                ))}
+              </div>
+            )}
+          </header>
+
+          <MarkdownContent content={story?.content || ""} />
         </article>
       </div>
     </div>
   );
 };
 
-export default Post;
+export default WarStory;
