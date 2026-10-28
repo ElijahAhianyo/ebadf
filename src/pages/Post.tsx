@@ -63,7 +63,7 @@ const Post = ({ postSource = 'published' }: PostProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/30 pt-24">
-      <div className="max-w-4xl mx-auto px-4 py-16">
+      <div className={`max-w-4xl mx-auto px-4 py-16 ${post?.content.includes("<SentenceNote") ? "article-with-margin-notes" : ""}`}>
         <RouterLink 
           to={postSource === 'draft' ? '/draft/blogs' : '/blogs'} 
           className="inline-flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors mb-8"

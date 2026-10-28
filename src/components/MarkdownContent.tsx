@@ -2,8 +2,10 @@ import React from "react";
 import Markdown from "markdown-to-jsx";
 import { Link as LinkIcon } from "lucide-react";
 import { CodeBlock } from "@/components/CodeBlock";
+import { MermaidDiagram } from "@/components/MermaidDiagram";
 import { MarkdownAccordion } from "@/components/MarkdownAccordion";
 import { Note } from "@/components/Note";
+import { SentenceNote } from "@/components/SentenceNote";
 
 const getTextContent = (children: React.ReactNode): string => {
   return React.Children.toArray(children)
@@ -57,9 +59,14 @@ type AccordionSummaryProps = {
   "data-accordion-summary"?: string;
 };
 
+const AccordionSummary = ({ children }: AccordionSummaryProps) => (
+  <span data-accordion-summary="true">{children}</span>
+);
+
 const isAccordionSummary = (child: React.ReactNode): child is React.ReactElement<AccordionSummaryProps> => {
   return React.isValidElement<AccordionSummaryProps>(child) &&
-    child.props["data-accordion-summary"] === "true";
+    (child.type === AccordionSummary || child.type === "summary" ||
+      child.props["data-accordion-summary"] === "true");
 };
 
 interface MarkdownContentProps {
@@ -69,6 +76,12 @@ interface MarkdownContentProps {
 export const MarkdownContent = ({ content }: MarkdownContentProps) => {
   const options = {
     overrides: {
+      SentenceNote: {
+        component: SentenceNote,
+        props: {
+          renderNote: (note: string) => <MarkdownContent content={note} />,
+        },
+      },
       h1: {
         component: createHeading("h1"),
       },
@@ -104,26 +117,26 @@ export const MarkdownContent = ({ content }: MarkdownContentProps) => {
         }
       },
       summary: {
-        component: ({ children }: React.HTMLAttributes<HTMLElement>) => {
-          return <span data-accordion-summary="true">{children}</span>;
-        }
+        component: AccordionSummary,
       },
       details: {
         component: ({ children, ...props }: React.DetailsHTMLAttributes<HTMLDetailsElement>) => {
           const childArray = React.Children.toArray(children);
-          let title = props.title || "Notes";
+          let title: React.ReactNode = props.title || "Details";
           let content = childArray;
 
           const summaryIndex = childArray.findIndex(isAccordionSummary);
 
           if (summaryIndex !== -1) {
             const summaryElement = childArray[summaryIndex];
-            title = summaryElement.props.children;
+            if (isAccordionSummary(summaryElement)) {
+              title = summaryElement.props.children;
+            }
             content = childArray.filter((_, index) => index !== summaryIndex);
           }
 
           return (
-            <MarkdownAccordion title={title}>
+            <MarkdownAccordion title={title} readMore={props.className?.includes("read-more")}>
               {content}
             </MarkdownAccordion>
           );
@@ -199,6 +212,10 @@ export const MarkdownContent = ({ content }: MarkdownContentProps) => {
               : "";
 
           const langMatch = (className || "").match(/\b(?:lang|language)-([A-Za-z0-9_-]+)\b/i);
+
+          if (langMatch?.[1].toLowerCase() === "mermaid") {
+            return <MermaidDiagram chart={codeContent} />;
+          }
 
           if (codeContent.includes("\n") || langMatch) {
             return (
