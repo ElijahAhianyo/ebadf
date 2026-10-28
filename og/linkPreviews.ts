@@ -20,7 +20,7 @@ const SITE_URL = "https://ebadf.me";
 const SITE_NAME = "EBADF";
 const AUTHOR = "Elijah Ahianyo";
 const SITE_DESCRIPTION =
-  "Elijah Ahianyo's corner of the internet. Writing about Rust, systems programming and the software I build.";
+  "Writing about the systems I build and find fascinating";
 
 const ROOT = path.resolve(__dirname, "..");
 const FONTS_DIR = path.join(__dirname, "fonts");
@@ -122,8 +122,8 @@ const siteCard: Page = {
   urlPath: "/",
   htmlFile: "",
   imageFile: SITE_IMAGE,
-  title: "Hey, I'm Elijah Ahianyo",
-  description: "Writing about Rust, systems programming and the software I build.",
+  title: "Elijah Ahianyo",
+  description: "Writing about the systems I build and find fascinating",
   type: "website",
   label: "",
 };
