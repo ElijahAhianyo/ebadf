@@ -5,13 +5,13 @@ date: "2026-10-02"
 readingTime: "20 min read"
 ---
 
-A couple of months ago, I started building [Seeq](https://github.com/ElijahAhianyo/seeq/), a small search engine in Rust which began purely out of curiosity because I wanted to solidify my understanding of information retrieval and learn how search engines work from first principles.
+A couple of months ago, I started building [Seeq](https://github.com/ElijahAhianyo/seeq/), a small search engine in Rust which began purely out of curiosity while reading the [introduction to information retrieval book by Christopher D. Manning](https://www.amazon.com/dp/0521865719?lv=shuf&channelId=500&plpRedirect=mhFallback) and also because I wanted to solidify my understanding of information retrieval and learn how search engines work from first principles.
 
 Along the way, I ran into an issue where I needed to accurately account for the amount of memory used while building the index. The idea is that Seeq builds part of the index in memory and then writes it to disk in chunks, so it needs a useful way to know when a chunk has grown large enough to flush.
 
 To give some context, let's explore some background on the basic architecture of Seeq.
 
-## Background: What is an inverted index?
+## What is an inverted index?
 
 For this discussion, we can think of a search engine as having two main parts: an inverted index and a query engine built on top of it to find and retrieve relevant documents.
 
