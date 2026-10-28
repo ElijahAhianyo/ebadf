@@ -1,6 +1,6 @@
 ---
 title: "Building a Memory Arena for Seeq"
-excerpt: "Why I moved position lists into a small memory arena, how it works, and what it still leaves out of the memory budget."
+excerpt: "An ad hoc memory arena for a small experimental search engine"
 date: "2026-10-02"
 readingTime: "20 min read"
 ---
