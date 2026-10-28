@@ -8,6 +8,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import type { PostSource } from "@/lib/posts";
 import NotFound from "./NotFound";
 import { MarkdownContent } from "@/components/MarkdownContent";
+import { PostComments } from "@/components/PostComments";
 
 interface PostProps {
   postSource?: PostSource;
@@ -96,6 +97,9 @@ const Post = ({ postSource = 'published' }: PostProps) => {
               </p>
             </div>
           </div>
+
+          {/* Drafts aren't public, so they don't get a comment thread. */}
+          {postSource === 'published' && slug && <PostComments slug={slug} />}
         </article>
       </div>
     </div>
