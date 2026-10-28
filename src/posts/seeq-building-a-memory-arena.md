@@ -1,6 +1,6 @@
 ---
 title: "Building a Memory Arena for Seeq"
-excerpt: "An ad hoc memory arena for a small search engine"
+excerpt: "An ad hoc memory arena for a small experimental search engine"
 date: "2026-10-02"
 readingTime: "20 min read"
 ---
