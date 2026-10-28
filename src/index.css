@@ -224,3 +224,188 @@ code.inline-code {
 .link {
   color: rgb(40, 40, 205) !important;
 }
+
+/* Code inside a link takes the link colour so it reads as clickable. */
+a code.inline-code,
+.dark a code.inline-code {
+  color: inherit;
+}
+a code.inline-code {
+  background-color: rgba(3, 102, 214, 0.08);
+  border-color: rgba(3, 102, 214, 0.2);
+}
+.dark a code.inline-code {
+  background-color: rgba(154, 208, 255, 0.1);
+  border-color: rgba(154, 208, 255, 0.2);
+}
+a:hover code.inline-code {
+  text-decoration: underline;
+}
+
+/* Sentence annotations stay in the reading flow until opened. */
+.sentence-note-trigger {
+  display: inline;
+  text-align: inherit;
+  font: inherit;
+  color: inherit;
+  border-radius: 0.2rem;
+  text-decoration: underline dotted hsl(var(--muted-foreground) / 0.6);
+  text-underline-offset: 0.25em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.sentence-note-trigger:hover,
+.sentence-note-trigger[data-active="true"] {
+  background: hsl(45 95% 60% / 0.2);
+  text-decoration-color: hsl(38 90% 45%);
+}
+
+.sentence-note-trigger:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 4px;
+  background: hsl(45 95% 60% / 0.2);
+}
+
+.sentence-note-margin {
+  position: fixed;
+  left: calc(50% + 28rem + 1rem);
+  width: 15rem;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  z-index: 40;
+  animation: note-reveal 180ms ease-out;
+}
+
+.sentence-note-body .prose {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.sentence-note-body .prose > :first-child,
+.sentence-note-body .prose > div > :first-child {
+  margin-top: 0;
+}
+
+.sentence-note-body .prose > :last-child,
+.sentence-note-body .prose > div > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) and (hover: hover) and (pointer: fine) {
+  .article-with-margin-notes {
+    max-width: calc(100vw - 20rem);
+    margin-left: 3rem;
+    margin-right: 17rem;
+  }
+
+  .sentence-note-margin {
+    left: calc(100vw - 16rem);
+    width: 14rem;
+  }
+}
+
+.sentence-note-sheet {
+  top: auto;
+  bottom: 0;
+  width: 100%;
+  max-width: 36rem;
+  max-height: 80dvh;
+  overflow-y: auto;
+  transform: translateX(-50%);
+  border-radius: 1.25rem 1.25rem 0 0;
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.sentence-note-sheet[data-state="open"] {
+  animation: note-sheet-in 240ms ease-out;
+}
+
+.sentence-note-sheet[data-state="closed"] {
+  animation: note-sheet-out 180ms ease-in;
+}
+
+.sentence-note-handle {
+  width: 2.5rem;
+  height: 0.25rem;
+  margin: -0.5rem auto 0.25rem;
+  border-radius: 999px;
+  background: hsl(var(--border));
+}
+
+.article-read-more [data-state="open"][role="region"] {
+  animation: accordion-down 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.article-read-more [data-state="closed"][role="region"] {
+  animation: accordion-up 240ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes note-reveal {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes note-sheet-in {
+  from { opacity: 0; transform: translate(-50%, 1.5rem); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes note-sheet-out {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to { opacity: 0; transform: translate(-50%, 1.5rem); }
+}
+
+@media (min-width: 640px) {
+  .sentence-note-sheet {
+    bottom: 1.5rem;
+    width: calc(100% - 3rem);
+    border-radius: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sentence-note-trigger,
+  .sentence-note-margin,
+  .sentence-note-sheet,
+  .article-read-more [role="region"],
+  .article-read-more svg {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mermaid diagrams (colours for nodes live in MermaidDiagram.tsx) */
+.mermaid-diagram svg {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+}
+.mermaid-diagram .edgeLabel,
+.mermaid-diagram .edgeLabel p {
+  font-size: 13px;
+  color: hsl(var(--muted-foreground));
+}
+/* No size changes here: Mermaid measures labels without these styles. */
+.mermaid-diagram .nodeLabel small {
+  opacity: 0.75;
+}
+.mermaid-diagram .cluster rect {
+  stroke-dasharray: 4 4;
+  rx: 10px;
+  ry: 10px;
+}
+.mermaid-diagram .cluster-label,
+.mermaid-diagram .cluster-label p {
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+/* Thick links (==>) mark the key step in a diagram. */
+.mermaid-diagram path.edge-thickness-thick {
+  stroke: #6366f1 !important;
+  stroke-width: 2.5px !important;
+}
+.dark .mermaid-diagram path.edge-thickness-thick {
+  stroke: #818cf8 !important;
+}
